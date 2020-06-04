@@ -76,10 +76,42 @@ const internPrompt = [
     {
         type: "input",
         message: "What is the intern's school named?",
-        name: "github"
+        name: "school"
     }
 ];
 
+const optionsPrompt = [
+    {
+        type: "input",
+        message: "Would you like to add another employee, finish and create page, or Exit without completion?",
+        name: "option",
+        options: [
+            {
+                name: "Add engineer to the team",
+                value: "addEngineer",
+                short: "Assign Engineer"
+            },
+
+            {
+                name: "Add intern to the team",
+                value: "addIntern",
+                short: "Assign Intern"
+            },
+
+            {
+                name: "Complete page and generate HTML",
+                value: "createHTML",
+                short: "Create HTML"
+            },
+
+            {
+                name: "Exit without finishing",
+                value: "exitApp",
+                short: "Exit Application"
+            },
+        ]
+    }
+]
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
