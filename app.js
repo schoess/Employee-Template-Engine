@@ -89,25 +89,25 @@ const optionsPrompt = [
             {
                 name: "Add engineer to the team",
                 value: "addEngineer",
-                short: "Assign Engineer"
+                tag: "Assign Engineer"
             },
 
             {
                 name: "Add intern to the team",
                 value: "addIntern",
-                short: "Assign Intern"
+                tag: "Assign Intern"
             },
 
             {
                 name: "Complete page and generate HTML",
                 value: "createHTML",
-                short: "Create HTML"
+                tag: "Create HTML"
             },
 
             {
                 name: "Exit without finishing",
                 value: "exitApp",
-                short: "Exit Application"
+                tag: "Exit Application"
             },
         ]
     }
