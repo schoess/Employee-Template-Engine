@@ -136,3 +136,20 @@ const optionsPrompt = [
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
+
+
+
+
+
+
+
+//How many people are in your team?
+//Is the first person a manager, intern or engineer?
+//If manager, prompt with manager questions object
+//If intern, prompt with intern questions object
+//If engineer, prompt with engineer questions object
+
+//Store user answers in array of objects
+//data in html equal to a var
+
+//if array problems, look into .join
