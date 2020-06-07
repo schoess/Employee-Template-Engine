@@ -9,7 +9,7 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const ids = [];
-const persons = [];
+const employees = [];
 
 const render = require("./lib/htmlRenderer");
 
@@ -124,9 +124,9 @@ async function createRoster() {
 
         let manager = await userPrompt(managerPrompt);
         ids.push(Number(manager.id));
-        persons.push(new Manager(...Object.values(manager)));
+        employees.push(new Manager(...Object.values(manager)));
 
-        for (person of persons) {
+        for (employee of employees) {
             let { option } = await userPrompt(optionsPrompt);
         
 
@@ -134,13 +134,13 @@ async function createRoster() {
             case "plusEngineer":
                 let engineer = await userPrompt(engineerPrompt);
                 ids.push(Number(engineer.id));
-                persons.push(new Engineer(...Object.values(engineer)));
+                employees.push(new Engineer(...Object.values(engineer)));
                 break;
 
             case "plusIntern": 
                 let intern = await userPrompt(internPrompt);
                 ids.push(Number(intern.id));
-                persons.push(new Intern(...Object.values(intern)));
+                employees.push(new Intern(...Object.values(intern)));
                 break;
                 
             case "Create HTML":
@@ -153,7 +153,7 @@ async function createRoster() {
         }
     }
 
-    const htmlBuild = render(persons);
+    const htmlBuild = render(employees);
     await writeFileAsync(outputPath, htmlBuild);
     console.log("Done.");
         
