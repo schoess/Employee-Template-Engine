@@ -8,6 +8,9 @@ const fs = require("fs");
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
+const ids = [];
+const persons = [];
+
 const render = require("./lib/htmlRenderer");
 
 
@@ -83,19 +86,19 @@ const internPrompt = [
 const optionsPrompt = [
     {
         type: "input",
-        message: "Would you like to add another employee, finish and create page, or Exit without completion?",
+        message: "Would you like to add another engineer, add another intern, finish and create HTML page, or Exit without completion?",
         name: "option",
         options: [
             {
                 name: "Add engineer to the team",
-                value: "addEngineer",
-                tag: "Assign Engineer"
+                value: "plusEngineer",
+                tag: "Add Engineer"
             },
 
             {
                 name: "Add intern to the team",
-                value: "addIntern",
-                tag: "Assign Intern"
+                value: "plusIntern",
+                tag: "Add Intern"
             },
 
             {
@@ -107,11 +110,58 @@ const optionsPrompt = [
             {
                 name: "Exit without finishing",
                 value: "exitApp",
-                tag: "Exit Application"
+                tag: "Exit"
             },
         ]
     }
 ];
+
+function userPrompt(prompt) {return inquirer.prompt(prompt)};
+
+async function createRoster() {
+    try {
+        console.log(`\nHello, please input all team information below.\n`);
+
+        let manager = await userPrompt(managerPrompt);
+        ids.push(Number(manager.id));
+        persons.push(new Manager(...Object.values(manager)));
+
+        for (person of persons) {
+            let { option } = await userPrompt(optionsPrompt);
+        
+
+        switch (option) {
+            case "plusEngineer":
+                let engineer = await userPrompt(engineerPrompt);
+                ids.push(Number(engineer.id));
+                persons.push(new Engineer(...Object.values(engineer)));
+                break;
+
+            case "plusIntern": 
+                let intern = await userPrompt(internPrompt);
+                ids.push(Number(intern.id));
+                persons.push(new Intern(...Object.values(intern)));
+                break;
+                
+            case "Create HTML":
+                console.log("Employee entry successfully completed.");
+                break;
+
+            case "Exit":
+                    console.log("Application terminated by the user.");
+                    return;
+        }
+    }
+
+    const htmlBuild = render(persons);
+    await writeFileAsync(outputPath, htmlBuild);
+    console.log("Done.");
+        
+    } catch(err) {
+        console.log(err);
+}}
+
+createRoster();
 
 
 // Write code to use inquirer to gather information about the development team members,
