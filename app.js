@@ -88,32 +88,32 @@ const internPrompt = [
 
 const optionsPrompt = [
     {
-        type: "input",
-        message: "Would you like to add another engineer, add another intern, finish and create HTML page, or Exit without completion?",
+        type: "list",
+        message: "Choose an option to do next.",
         name: "option",
-        options: [
+        choices: [
             {
                 name: "Add engineer to the team",
                 value: "plusEngineer",
-                tag: "Add Engineer"
+                short: "Add Engineer"
             },
 
             {
                 name: "Add intern to the team",
                 value: "plusIntern",
-                tag: "Add Intern"
+                short: "Add Intern"
             },
 
             {
                 name: "Complete page and generate HTML",
                 value: "createHTML",
-                tag: "Create HTML"
-            },
+                short: "Create HTML"
+            },            
 
             {
                 name: "Exit without finishing",
                 value: "exitApp",
-                tag: "Exit"
+                short: "Exit"
             },
         ]
     }
@@ -128,18 +128,15 @@ async function createRoster() {
         let manager = await userPrompt(managerPrompt);
         ids.push(Number(manager.id));
         employees.push(new Manager(...Object.values(manager)));
-        console.log("");
 
         for (employee of employees) {
-            let { option } = await userPrompt(optionsPrompt);
-            console.log("");
+            let { choice } = await userPrompt(optionsPrompt);
         
-        switch (option) {
+        switch (choice) {
             case "plusEngineer":
                 let engineer = await userPrompt(engineerPrompt);
                 ids.push(Number(engineer.id));
                 employees.push(new Engineer(...Object.values(engineer)));
-                console.log("");
                 break;
 
             case "plusIntern": 
