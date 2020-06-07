@@ -4,9 +4,12 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
+const util = require("util");
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
+
+const writeFileAsync = util.promisify(fs.writeFile);
 
 const ids = [];
 const employees = [];
@@ -125,22 +128,25 @@ async function createRoster() {
         let manager = await userPrompt(managerPrompt);
         ids.push(Number(manager.id));
         employees.push(new Manager(...Object.values(manager)));
+        console.log("");
 
         for (employee of employees) {
             let { option } = await userPrompt(optionsPrompt);
+            console.log("");
         
-
         switch (option) {
             case "plusEngineer":
                 let engineer = await userPrompt(engineerPrompt);
                 ids.push(Number(engineer.id));
                 employees.push(new Engineer(...Object.values(engineer)));
+                console.log("");
                 break;
 
             case "plusIntern": 
                 let intern = await userPrompt(internPrompt);
                 ids.push(Number(intern.id));
                 employees.push(new Intern(...Object.values(intern)));
+                console.log("");
                 break;
                 
             case "Create HTML":
