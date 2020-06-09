@@ -151,8 +151,8 @@ async function createRoster() {
                 break;
 
             case "Exit":
-                    console.log("Application terminated by the user.");
-                    return;
+                console.log("Application terminated by the user.");
+                return;
         }
     }
 
