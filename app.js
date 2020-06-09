@@ -129,7 +129,7 @@ const optionsPrompt =
 const users = [];
 async function userPrompt(prompt) {
     const answer = await inquirer.prompt([...prompt, optionsPrompt])
-    users.push(answer)
+    employees.push(answer)
     switch (answer.option) {
         case 'exitApp':
             console.log('app exited');
@@ -137,59 +137,23 @@ async function userPrompt(prompt) {
         case 'plusIntern':
             userPrompt(internPrompt);
             break;
+        case 'plusEngineer':
+            userPrompt(engineerPrompt);
+            break;
         case 'createHTML':
-            createRoster(users);
+            createRoster(employees);
             break;
         default:
             console.log('no exit');
     }
-    console.log(users);
+    console.log(employees);
 };
 
 async function createRoster() {
-    try {
-        console.log(`\nHello, please input all team information below.\n`);
-
-        let manager = await userPrompt(managerPrompt);
-        ids.push(Number(manager.id));
-        employees.push(new Manager(...Object.values(manager)));
-
-        for (employee of employees) {
-            let { choice } = await userPrompt(optionsPrompt);
-        
-        switch (choice) {
-            case "plusEngineer":
-                let engineer = await userPrompt(engineerPrompt);
-                ids.push(Number(engineer.id));
-                employees.push(new Engineer(...Object.values(engineer)));
-                break;
-
-            case "plusIntern": 
-                let intern = await userPrompt(internPrompt);
-                ids.push(Number(intern.id));
-                employees.push(new Intern(...Object.values(intern)));
-                console.log("");
-                break;
-                
-            case "Create HTML":
-                console.log("Employee entry successfully completed.");
-                break;
-
-            case "Exit":
-                console.log("Application terminated by the user.");
-                return;
-        }
-    }
-
     const htmlBuild = render(employees);
     await writeFileAsync(outputPath, htmlBuild);
     console.log("Done.");
-        
-    } catch(err) {
-        console.log(err);
-}}
-
-//createRoster();
+};
 userPrompt(managerPrompt);
 
 
