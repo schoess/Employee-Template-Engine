@@ -86,7 +86,7 @@ const internPrompt = [
     }
 ];
 
-const optionsPrompt = [
+const optionsPrompt = 
     {
         type: "list",
         message: "Choose an option to do next.",
@@ -116,10 +116,35 @@ const optionsPrompt = [
                 short: "Exit"
             },
         ]
-    }
-];
+    };
 
-function userPrompt(prompt) {return inquirer.prompt(prompt)};
+// ask the questions about a user; DONE
+//     write a function that ONLY asks questions about users
+//     save all the answer to some variable
+// if they choose exit:
+//    generate html
+// if the choose something else
+//    run the funtion that ONLY asks questions about users
+
+const users = [];
+async function userPrompt(prompt) {
+    const answer = await inquirer.prompt([...prompt, optionsPrompt])
+    users.push(answer)
+    switch (answer.option) {
+        case 'exitApp':
+            console.log('app exited');
+            break;
+        case 'plusIntern':
+            userPrompt(internPrompt);
+            break;
+        case 'createHTML':
+            createRoster(users);
+            break;
+        default:
+            console.log('no exit');
+    }
+    console.log(users);
+};
 
 async function createRoster() {
     try {
@@ -164,7 +189,8 @@ async function createRoster() {
         console.log(err);
 }}
 
-createRoster();
+//createRoster();
+userPrompt(managerPrompt);
 
 
 // Write code to use inquirer to gather information about the development team members,
@@ -206,3 +232,5 @@ createRoster();
 //data in html equal to a var
 
 //if array problems, look into .join
+
+
