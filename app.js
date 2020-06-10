@@ -12,7 +12,6 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const writeFileAsync = util.promisify(fs.writeFile);
 
 const ids = [];
-const employees = [];
 
 const render = require("./lib/htmlRenderer");
 
@@ -93,6 +92,12 @@ const optionsPrompt =
         name: "option",
         choices: [
             {
+                name: "Add manager to the team",
+                value: "plusManager",
+                short: "Add Manager"
+            },
+
+            {
                 name: "Add engineer to the team",
                 value: "plusEngineer",
                 short: "Add Engineer"
@@ -126,19 +131,34 @@ const optionsPrompt =
 // if the choose something else
 //    run the funtion that ONLY asks questions about users
 
-const users = [];
-async function userPrompt(prompt) {
-    const answer = await inquirer.prompt([...prompt, optionsPrompt])
+
+async function userPrompt(prompt, optionsPrompt) {
+    inquirer.prompt(optionsPrompt)
+    
+    const answer = await inquirer.prompt([...prompt, optionsPrompt]);
     employees.push(answer)
+
+    console.log("Please first add a manager and then the rest of the team");
+
+
     switch (answer.option) {
         case 'exitApp':
             console.log('app exited');
             break;
+        case 'plusManager':
+            // let manager = await userPrompt(managerPrompt);
+            ids.push(Number(manager.id));
+            employees.push(new Manager(...Object.values(manager)));
+            break;
         case 'plusIntern':
-            userPrompt(internPrompt);
+            // let intern = await userPrompt(internPrompt);
+            ids.push(Number(intern.id));
+            employees.push(new Intern(...Object.values(intern)));
             break;
         case 'plusEngineer':
-            userPrompt(engineerPrompt);
+            // let engineer = await userPrompt(engineerPrompt);
+            ids.push(Number(engineer.id));
+            employees.push(new Engineer(...Object.values(engineer)));
             break;
         case 'createHTML':
             createRoster(employees);
@@ -146,15 +166,19 @@ async function userPrompt(prompt) {
         default:
             console.log('no exit');
     }
-    console.log(employees);
 };
 
+const employees = [];
 async function createRoster() {
-    const htmlBuild = render(employees);
-    await writeFileAsync(outputPath, htmlBuild);
-    console.log("Done.");
-};
-userPrompt(managerPrompt);
+    try {
+        const htmlBuild = render(employees);
+        console.log(employees);
+        await writeFileAsync(outputPath, htmlBuild);
+        console.log("Done.");
+} catch(err) {
+    console.log(err);
+}};
+userPrompt();
 
 
 // Write code to use inquirer to gather information about the development team members,
