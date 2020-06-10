@@ -35,8 +35,8 @@
   WHEN I answer those questions
   THEN I see a team.html appear in the output directory of the program with my teams info.
   
-  ![Screenshot of Application](https://user-images.githubusercontent.com/60049799/83175169-1cd49100-a0e1-11ea-84dc-c32213649dc6.png "Screenshot")-
-  
+![Capture](https://user-images.githubusercontent.com/60049799/84223619-fed33d00-aa9f-11ea-9b8a-7717f9b9e92b.PNG)
+
   ## License
   
   License: MIT
