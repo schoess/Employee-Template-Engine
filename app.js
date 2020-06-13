@@ -11,6 +11,7 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const writeFileAsync = util.promisify(fs.writeFile);
 
+const employees = [];
 const ids = [];
 
 const render = require("./lib/htmlRenderer");
@@ -131,11 +132,15 @@ const optionsPrompt =
 // if the choose something else
 //    run the funtion that ONLY asks questions about users
 
+// function userChoose() {
+//     let { answer } = inquirer.prompt([...prompt, optionsPrompt]);
+// };
 
-async function userPrompt(prompt) {
-    inquirer.prompt(optionsPrompt)
+function userPrompt(prompt) {
+    inquirer.prompt(optionsPrompt).then(function(answer) {
+        console.log(answer.option);
+    });
     
-    let { answer } = await inquirer.prompt([...prompt, optionsPrompt]);
     employees.push(answer)
 
     console.log("Please first add a manager and then the rest of the team");
@@ -146,21 +151,25 @@ async function userPrompt(prompt) {
             console.log('app exited');
             break;
         case 'plusManager':
-            // let manager = await userPrompt(managerPrompt);
+            let manager = userPrompt(managerPrompt);
             ids.push(Number(manager.id));
             employees.push(new Manager(...Object.values(manager)));
+            userChoose();
             break;
         case 'plusIntern':
-            // let intern = await userPrompt(internPrompt);
+            let intern = userPrompt(internPrompt);
             ids.push(Number(intern.id));
             employees.push(new Intern(...Object.values(intern)));
+            userChoose();
             break;
         case 'plusEngineer':
-            // let engineer = await userPrompt(engineerPrompt);
+            let engineer = userPrompt(engineerPrompt);
             ids.push(Number(engineer.id));
             employees.push(new Engineer(...Object.values(engineer)));
+            userChoose();
             break;
         case 'createHTML':
+            console.log(answer);
             createRoster(employees);
             break;
         default:
@@ -168,7 +177,7 @@ async function userPrompt(prompt) {
     }
 };
 
-const employees = [];
+
 async function createRoster() {
     try {
         const htmlBuild = render(employees);
