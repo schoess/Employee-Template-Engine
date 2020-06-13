@@ -124,57 +124,53 @@ const optionsPrompt =
         ]
     };
 
-// ask the questions about a user; DONE
-//     write a function that ONLY asks questions about users
-//     save all the answer to some variable
-// if they choose exit:
-//    generate html
-// if the choose something else
-//    run the funtion that ONLY asks questions about users
-
-// function userChoose() {
-//     let { answer } = inquirer.prompt([...prompt, optionsPrompt]);
-// };
-
-function userPrompt(prompt) {
-    inquirer.prompt(optionsPrompt).then(function(answer) {
+function chooseOption(manager, engineer, intern, options) {
+    inquirer.prompt(options).then(function (answer) {
         console.log(answer.option);
+        switch (answer.option) {
+            case "plusManager":
+                userPrompt(manager, "manager");
+                break;
+            case "plusEngineer":
+                userPrompt(engineer, "engineer");
+                break;
+            case "plusIntern":
+                userPrompt(intern, "engineer");
+                break;
+            case "createHTML":
+                console.log(employees);
+                createRoster(employees);
+                break;
+            case "exitApp":
+                console.log("no exit");
+        }
     });
-    
-    employees.push(answer)
+}
 
-    console.log("Please first add a manager and then the rest of the team");
+chooseOption(managerPrompt, engineerPrompt, internPrompt, optionsPrompt);
 
+function userPrompt(chosenPrompt, promptChecker) {
+    inquirer.prompt(chosenPrompt).then(function (answers) {
 
-    switch (answer.option) {
-        case 'exitApp':
-            console.log('app exited');
-            break;
-        case 'plusManager':
-            let manager = userPrompt(managerPrompt);
-            ids.push(Number(manager.id));
-            employees.push(new Manager(...Object.values(manager)));
-            userChoose();
-            break;
-        case 'plusIntern':
-            let intern = userPrompt(internPrompt);
-            ids.push(Number(intern.id));
-            employees.push(new Intern(...Object.values(intern)));
-            userChoose();
-            break;
-        case 'plusEngineer':
-            let engineer = userPrompt(engineerPrompt);
-            ids.push(Number(engineer.id));
-            employees.push(new Engineer(...Object.values(engineer)));
-            userChoose();
-            break;
-        case 'createHTML':
-            console.log(answer);
-            createRoster(employees);
-            break;
-        default:
-            console.log('no exit');
-    }
+        ids.push(Number(answers.id));
+
+        switch (promptChecker) {
+            case "manager":
+                employees.push(new Manager(...Object.values(answers)));
+                break;
+            case "engineer":
+                employees.push(new Engineer(...Object.values(answers)));
+                break;
+            case "intern":
+                employees.push(new Intern(...Object.values(answers)));
+                break;
+            default:
+                return console.log("something went wrong...");
+        }
+    })
+    .then(function () {
+        chooseOption(managerPrompt, engineerPrompt, internPrompt, optionsPrompt);
+    })
 };
 
 
@@ -187,47 +183,6 @@ async function createRoster() {
 } catch(err) {
     console.log(err);
 }};
-userPrompt();
 
-
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
-
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
-
-
-
-
-
-
-
-//How many people are in your team?
-//Is the first person a manager, intern or engineer?
-//If manager, prompt with manager questions object
-//If intern, prompt with intern questions object
-//If engineer, prompt with engineer questions object
-
-//Store user answers in array of objects
-//data in html equal to a var
-
-//if array problems, look into .join
 
 
