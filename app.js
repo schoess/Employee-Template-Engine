@@ -132,10 +132,10 @@ const optionsPrompt =
 //    run the funtion that ONLY asks questions about users
 
 
-async function userPrompt(prompt, optionsPrompt) {
+async function userPrompt(prompt) {
     inquirer.prompt(optionsPrompt)
     
-    const answer = await inquirer.prompt([...prompt, optionsPrompt]);
+    let { answer } = await inquirer.prompt([...prompt, optionsPrompt]);
     employees.push(answer)
 
     console.log("Please first add a manager and then the rest of the team");
