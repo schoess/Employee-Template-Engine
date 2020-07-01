@@ -2,6 +2,8 @@
 
   > The Employee Template Engine creates a nicely formatted HTML page in which you can easily see the structure of your staff, while also keeping their contact information handy. 
   
+  ##See it here!: https://mvc-app-schoess.herokuapp.com/
+  
   [![NPM Version][npm-image]][npm-url]
   ## Table of Contents
     * Installation
@@ -28,12 +30,12 @@
   ## Usage example
   
   AS a user
-  WHEN I do "node app.js"
-  THEN I am prompted to answer a range of questions
-  WHEN I answer those questions
-  THEN I see a team.html appear in the output directory of the program with my teams info.
-  
-![Capture](https://user-images.githubusercontent.com/60049799/84223619-fed33d00-aa9f-11ea-9b8a-7717f9b9e92b.PNG)
+  WHEN I navigate to the site
+  THEN I see a page with a few burgers.
+  WHEN I enter my new burger
+  THEN I see my new burger appear on the lefthand side of the screen uneaten.
+  WHEN I click "Eat"
+  THEN The burger is moved to the right side of the screen to the "Devoured" section
 
   ## License
   
