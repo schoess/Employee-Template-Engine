@@ -2,7 +2,7 @@
 
   > The Employee Template Engine creates a nicely formatted HTML page in which you can easily see the structure of your staff, while also keeping their contact information handy. 
   
-  ##See it here!: https://mvc-app-schoess.herokuapp.com/
+  ## See it here!: https://mvc-app-schoess.herokuapp.com/
   
   [![NPM Version][npm-image]][npm-url]
   ## Table of Contents
